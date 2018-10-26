@@ -1,24 +1,16 @@
 let gulp = require('gulp')
+let uglify = require('gulp-uglify')
+let notify = require('gulp-notify')
 
-// Async with a callback
-gulp.task( 'async1', function() {
-    console.log( 'Starting async1' );
-    setTimeout( function() {
-        console.log( "finished Async 1" );
 
-        // cb();
-    }, 6000 );
-} );
-
-// Async with a callback
-gulp.task( 'async2', function( cb ) {
-    console.log( 'Starting async2' );
-    setTimeout( function() {
-        console.log( "finished Async 2" );
-        cb();
-    }, 2000 );
-} );
-
-gulp.task('default', ['async2'], function() {
-    console.log("finish default");
+gulp.task('uglify', function () {
+    console.log('Uglifying files')
+    return gulp.src('js/*.js')
+            .pipe(uglify())
+            .pipe(gulp.dest('dist/'))
+            .pipe(notify("Ficheros generados"))
 })
+
+gulp.task( 'watch:js', function() {
+    gulp.watch('js/*.js',['uglify'])
+} );
