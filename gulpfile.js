@@ -1,15 +1,24 @@
 let gulp = require('gulp')
-let spritesmith = require('gulp.spritesmith')
 
-gulp.task('sprites', function () {
-    var spriteData = gulp.src('img/escuderias/*.png')
-        .pipe(spritesmith({
-            imgName: '../img/sprite.png',
-            cssName: 'sprite.css'
-        }))
-    spriteData.img.pipe(gulp.dest('dist/img'))
-    spriteData.css.pipe(gulp.dest('dist/css'))
-})
-gulp.task('default', ['sprites'], function () {
-    console.log('Default task')
+// Async with a callback
+gulp.task( 'async1', function() {
+    console.log( 'Starting async1' );
+    setTimeout( function() {
+        console.log( "finished Async 1" );
+
+        // cb();
+    }, 6000 );
+} );
+
+// Async with a callback
+gulp.task( 'async2', function( cb ) {
+    console.log( 'Starting async2' );
+    setTimeout( function() {
+        console.log( "finished Async 2" );
+        cb();
+    }, 2000 );
+} );
+
+gulp.task('default', ['async2'], function() {
+    console.log("finish default");
 })
